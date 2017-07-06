@@ -1,0 +1,23 @@
+{
+  "name": "natural-goodness",
+  "version": "0.0.1",
+  "description": "Web application to manage the natural goodness co-op",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielemery/natural-goodness.git"
+  },
+  "keywords": [
+    "co-op",
+    "web"
+  ],
+  "author": "Daniel Emery <danielremery@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/danielemery/natural-goodness/issues"
+  },
+  "homepage": "https://github.com/danielemery/natural-goodness#readme"
+}
