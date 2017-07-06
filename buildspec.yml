@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm install
+      - bower install
+      - npm install -g gulp
+  build:
+    commands:
+      - gulp
+artifacts:
+  files:
+    - dist/*
+  discard-paths: yes
