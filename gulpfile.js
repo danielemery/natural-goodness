@@ -12,7 +12,7 @@ gulp.task('pug', function() {
 
 gulp.task('css', function() {
     return gulp.src([
-            'bower_components/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'src/css/cover.css'
         ])
         .pipe(concat('styles.css'))
@@ -21,9 +21,9 @@ gulp.task('css', function() {
 
 gulp.task('js', function(){
     return gulp.src([
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/tether/dist/js/tether.min.js',
-            'bower_components/bootstrap/dist/js/bootstrap.min.js'
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/tether/dist/js/tether.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js'
         ])
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest('dist/js'));

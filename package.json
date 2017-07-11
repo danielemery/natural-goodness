@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/danielemery/natural-goodness#readme",
   "dependencies": {
-    "bower": "^1.8.0",
+    "bootstrap": "4.0.0-alpha.6",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-pug": "^3.3.0",
-    "pug": "^2.0.0-rc.2"
+    "jquery": "^3.2.1",
+    "pug": "^2.0.0-rc.2",
+    "tether": "^1.4.0"
   }
 }
