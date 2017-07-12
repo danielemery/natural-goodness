@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import HeaderLogin from './HeaderLogin.js';
 
 class Header extends Component {
     render() {
