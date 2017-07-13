@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap'
+import { NavLink } from 'react-router-dom';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import './Header.css';
 
 class Header extends Component {
 
@@ -22,7 +23,7 @@ class Header extends Component {
 
     render() {
         return (
-          <Navbar color="faded" light toggleable>
+          <Navbar color="faded" light toggleable className="main-nav">
             <NavbarToggler right onClick={this.toggle} />
             <NavbarBrand>Natural Goodness</NavbarBrand>
             <Collapse isOpen={this.state.isOpen} navbar>
