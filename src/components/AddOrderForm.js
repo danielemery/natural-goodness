@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Icon } from 'react-fa';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 class AddOrderForm extends Component {
     constructor(props) {
@@ -38,11 +40,14 @@ class AddOrderForm extends Component {
 
     render() {
         return (
-            <span>
-                <input onChange={this.handleOrderNameChange}></input>
-                <a onClick={this.handleCancelOrder}>Cancel</a>
-                <a onClick={this.handleAddOrder}>Add</a>
-            </span>
+            <Form inline>
+                <FormGroup row>
+                    <Label for='name'>Name: </Label>
+                    <Input type='text' name='name' id='name' onChange={this.handleOrderNameChange} />
+                    <Icon name='check' size='lg' onClick={this.handleAddOrder} />
+                    <Icon name='times' size='lg' onClick={this.handleCancelOrder} />
+                </FormGroup>
+            </Form>
         );
     }
 }
