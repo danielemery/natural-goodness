@@ -1,0 +1,5 @@
+@media screen and (min-width: 48em) {
+    nav.main-nav {
+        margin-bottom: 2rem;
+    }
+}

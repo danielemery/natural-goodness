@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startAddOrder, cancelAddOrder, addOrder  } from '../reducers/orders';
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Icon } from 'react-fa';
 import AddOrderForm from './AddOrderForm';
 
 class Orders extends Component {
@@ -10,9 +11,9 @@ class Orders extends Component {
 
         var orderList = this.props.orders.orders.map(function(order){
             return (
-                <ListGroupItem>
+                <ListGroupItem key={order.key}>
                     {order.name}
-                    {!order.confirmed ? <span>...Updating</span> : null}
+                    {!order.confirmed ? <Icon name='circle-o-notch' spin /> : null}
                 </ListGroupItem>
             );
         });
