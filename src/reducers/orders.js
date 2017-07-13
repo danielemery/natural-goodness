@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4'
+
 /** Begin adding the order (client side) */
 export const START_ADD_ORDER = 'orders/START_ADD_ORDER';
 /** Cancel adding the order */
@@ -71,13 +73,28 @@ export const cancelAddOrder = () => {
 
 export const addOrder = (order) => {
     return dispatch => {
+
+        var adding = {
+            ...order,
+            name: order.name,
+            confirmed: false,
+            key: uuid()
+        }
+
         dispatch({
             type: ADD_ORDER,
-            order: {
-                name: order.name,
-                confirmed: false
-            }
+            order: adding
         });
+
+        return setTimeout(() => {
+            dispatch({
+                type: ORDER_ADDED,
+                order: {
+                    ...adding,
+                    confirmed: true
+                }
+            })
+        }, 3000);
     }
 }
 
