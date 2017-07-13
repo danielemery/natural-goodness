@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
-import Header from './components/Header.js';
-import Footer from './components/Footer.js';
+import { Route } from 'react-router-dom'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import About from './components/About'
+import Orders from './components/Orders'
 
 class App extends Component {
   render() {
@@ -12,10 +15,11 @@ class App extends Component {
 
             <Header />
 
-            <div className="inner-cover">
-              <h1 className="cover-heading">Coming Soon</h1>
-              <p className="lead">A new way of managing the Natural Goodness Co-Op orders is currently in development. This will vastly simplify making your co-op order and increase visibility of filling orders etc.</p>
-            </div>
+            <main>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+              <Route path='/orders' component={Orders} />
+            </main>
 
             <Footer />
 
