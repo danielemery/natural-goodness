@@ -27,7 +27,7 @@ class About extends Component {
                     <Card>
                         <CardBlock>
                             <CardTitle>Contribute</CardTitle>
-                            <CardText>The application is being developed as an open source project, if you wish to help contribute please request at the <a href="https://github.com/danielemery/natural-goodness" target="_blank">GitHub Repository</a>.</CardText>
+                            <CardText>The application is being developed as an open source project, if you wish to help contribute please request at the <a href="https://github.com/danielemery/natural-goodness" target="_blank" rel="noopener noreferrer">GitHub Repository</a>.</CardText>
                         </CardBlock>
                     </Card>
                 </CardDeck>

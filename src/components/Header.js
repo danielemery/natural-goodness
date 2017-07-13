@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Icon } from 'react-fa';
 import './Header.css';
 
 class Header extends Component {
@@ -29,13 +30,13 @@ class Header extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink className="nav-link" activeClassName="active" exact to="/">Home</NavLink>
+                  <NavLink className="nav-link" activeClassName="active" exact to="/"><Icon name='home'/> Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" activeClassName="active" exact to="/about">About</NavLink>
+                  <NavLink className="nav-link" activeClassName="active" exact to="/about"><Icon name='info' /> About</NavLink>
                 </NavItem>
                 <NavItem>
-                  <a className="nav-link" href="https://github.com/danielemery/natural-goodness" target="_blank">GitHub Project</a>
+                  <a className="nav-link" href="https://github.com/danielemery/natural-goodness" target="_blank" rel="noopener noreferrer"><Icon name='github' /> GitHub</a>
                 </NavItem>
               </Nav>
             </Collapse>
