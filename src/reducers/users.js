@@ -1,12 +1,13 @@
 // import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
 
-export const LOGIN = 'users/LOGIN';
+export const LOGGING_IN = 'users/LOGIN';
 export const LOGOUT = 'users/LOGOUT';
 export const LOGGED_IN = 'users/LOGGED_IN';
 
 export const LoginState = {
     LOGGED_IN: 'LOGGED_IN',
-    LOGGED_OUT: 'LOGGED_OUT'
+    LOGGED_OUT: 'LOGGED_OUT',
+    LOGGING_IN: "LOGGING_IN"
 }
 
 const initialState = {
@@ -16,7 +17,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case LOGIN:
+        case LOGGING_IN:
+            return {
+                ...state,
+                loginState: LoginState.LOGGING_IN
+            }
+        case LOGGED_IN:
             return {
                 ...state,
                 loginState: LoginState.LOGGED_IN
@@ -34,11 +40,14 @@ export default (state = initialState, action) => {
 export const login = (credentials) => {
     return dispatch => {
         dispatch({
-            type: LOGIN,
-            credentials
+            type: LOGGING_IN
         });
 
-        
+        return setTimeout(() => {
+            dispatch({
+                type: LOGGED_IN
+            });
+        }, 3000);
     }
 };
 
@@ -48,4 +57,4 @@ export const logout = () => {
             type: LOGOUT
         });
     }
-}
+};

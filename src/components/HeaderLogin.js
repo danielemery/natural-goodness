@@ -15,22 +15,21 @@ class HeaderLogin extends Component {
     }
 
     render() {
-
-        var link = null;
-        if(this.props.loginState === LoginState.LOGGED_IN) {
-            link = <NavLink onClick={this.handleLogout}><Icon name='sign-out'/> Logout</NavLink>
-        } else {
-            link = <RouteNavLink className="nav-link" activeClassName="active" exact to="/login"><Icon name='sign-in' /> Login</RouteNavLink>;
+        switch(this.props.loginState) {
+            case LoginState.LOGGED_IN:
+                return <NavLink onClick={this.handleLogout}><Icon name='sign-out'/> Logout</NavLink>
+            case LoginState.LOGGING_IN:
+                return <NavLink><Icon name='circle-o-notch' spin /></NavLink>
+            case LoginState.LOGGED_OUT:
+                return <RouteNavLink className="nav-link" activeClassName="active" exact to="/login"><Icon name='sign-in' /> Login</RouteNavLink>;
+            default:
+                return null;
         }
-
-        return link;
     }
 
     handleLogout() {
         this.props.logout();
     }
-
-
 }
 
 const mapStateToProps = state => ({
