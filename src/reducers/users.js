@@ -1,4 +1,5 @@
-// import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
+import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import config from '../config.json';
 
 export const LOGGING_IN = 'users/LOGIN';
 export const LOGOUT = 'users/LOGOUT';
@@ -42,6 +43,10 @@ export const login = (credentials) => {
         dispatch({
             type: LOGGING_IN
         });
+
+        var authenticationDetails = new AuthenticationDetails(credentials);
+        console.log(config);
+
 
         return setTimeout(() => {
             dispatch({
