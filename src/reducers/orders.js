@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4'
+import uuid from 'uuid/v4';
 
 /** Begin adding the order (client side) */
 export const START_ADD_ORDER = 'orders/START_ADD_ORDER';
@@ -98,7 +98,7 @@ export const addOrder = (order) => {
     }
 }
 
-export const confirmOrder = (order) => {
+export const orderAdded = (order) => {
     return dispatch => {
         dispatch({
             type: ORDER_ADDED,
