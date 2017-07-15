@@ -1,9 +1,11 @@
-import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import config from '../config.json';
 
 export const LOGGING_IN = 'users/LOGIN';
 export const LOGOUT = 'users/LOGOUT';
 export const LOGGED_IN = 'users/LOGGED_IN';
+export const LOGIN_ERROR = 'users/LOGIN_ERROR';
+export const DISMISS_LOGIN_ERROR = 'users/DISMISS_LOGIN_ERROR';
 
 export const LoginState = {
     LOGGED_IN: 'LOGGED_IN',
@@ -13,7 +15,8 @@ export const LoginState = {
 
 const initialState = {
     users: [],
-    loginState: LoginState.LOGGED_OUT
+    loginState: LoginState.LOGGED_OUT,
+    loginError: ''
 }
 
 export default (state = initialState, action) => {
@@ -28,6 +31,17 @@ export default (state = initialState, action) => {
                 ...state,
                 loginState: LoginState.LOGGED_IN
             }
+        case LOGIN_ERROR:
+            return {
+                ...state,
+                loginState: LoginState.LOGGED_OUT,
+                loginError: action.err.message
+            }
+        case DISMISS_LOGIN_ERROR:
+            return {
+                ...state,
+                loginError: ''
+            }
         case LOGOUT:
             return {
                 ...state,
@@ -39,20 +53,36 @@ export default (state = initialState, action) => {
 }
 
 export const login = (credentials) => {
+    console.log(credentials);
     return dispatch => {
         dispatch({
             type: LOGGING_IN
         });
 
         var authenticationDetails = new AuthenticationDetails(credentials);
-        console.log(config);
+        var userPool = new CognitoUserPool(config.userPool);
 
+        var user = new CognitoUser({
+            Username: credentials.username,
+            Pool: userPool
+        });
 
-        return setTimeout(() => {
-            dispatch({
-                type: LOGGED_IN
-            });
-        }, 3000);
+        user.authenticateUser(authenticationDetails, {
+            onSuccess: (result) => {
+                console.log(result);
+                dispatch({
+                    type: LOGGED_IN,
+                    result
+                });
+            },
+            onFailure: (err) => {
+                console.log(err);
+                dispatch({
+                    type: LOGIN_ERROR,
+                    err
+                });
+            }
+        })
     }
 };
 
@@ -63,3 +93,11 @@ export const logout = () => {
         });
     }
 };
+
+export const dismissLoginError = () => {
+    return dispatch => {
+        dispatch({
+            type: DISMISS_LOGIN_ERROR
+        });
+    }
+}

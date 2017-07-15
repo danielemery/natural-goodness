@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
-import { login } from '../reducers/users';
-import { navigate } from '../reducers/navigate';
+import { login, dismissLoginError } from '../reducers/users';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import LoginForm from './LoginForm';
 
 class Login extends Component {
     constructor(props) {
@@ -14,23 +13,23 @@ class Login extends Component {
 
     render() {
         return (
-            <Button onClick={this.handleLogin}>Login</Button>
+            <LoginForm onLogin={this.handleLogin} error={this.props.loginError} onErrorDismiss={this.props.dismissLoginError} />
         );
     }
 
-    handleLogin = () => {
-        this.props.login();
-        this.props.navigate('/');
+    handleLogin = (credentials) => {
+        this.props.login(credentials);
     }
 }
 
 const mapStateToProps = state => ({
-    
+    loginState: state.users.loginState,
+    loginError: state.users.loginError
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     login,
-    navigate
+    dismissLoginError
 }, dispatch);
 
 export default connect(
