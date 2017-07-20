@@ -19,6 +19,7 @@ class Login extends Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handlePasswordResetRequested = this.handlePasswordResetRequested.bind(this);
         this.handlePasswordResetCodeRequested = this.handlePasswordResetCodeRequested.bind(this);
+        this.handlePasswordResetCancelled = this.handlePasswordResetCancelled.bind(this);
     }
 
     render() {
@@ -27,7 +28,7 @@ class Login extends Component {
             case LOGIN:
                 return <LoginForm onLogin={this.handleLogin} error={this.props.loginError} onErrorDismiss={this.props.dismissLoginError} onResetPassword={this.handlePasswordResetRequested} />
             case RESET:
-                return <ResetPasswordForm onResetPasswordStart={this.handlePasswordResetCodeRequested} />
+                return <ResetPasswordForm onResetPasswordStart={this.handlePasswordResetCodeRequested} onResetPasswordCancel={this.handlePasswordResetCancelled} />
         }
     }
 
@@ -42,6 +43,16 @@ class Login extends Component {
                 state: RESET
             }
         });
+    }
+
+    handlePasswordResetCancelled = () => {
+        console.log("CANCELLED");
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                state: LOGIN
+            }
+        })
     }
 
     handlePasswordResetCodeRequested = (username) => {

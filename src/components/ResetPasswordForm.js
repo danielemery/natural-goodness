@@ -24,6 +24,7 @@ class ResetPasswordForm extends Component {
                     </FormGroup>
                 </Form>
                 <Button onClick={this.handleResetCodeRequested}>Send Reset Code</Button>
+                <Button onClick={this.props.onResetPasswordCancel}>Cancel</Button>
             </div>
         );
     }
