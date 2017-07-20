@@ -15,6 +15,7 @@ class LoginForm extends Component {
         this.handleErrorDismissed = this.handleErrorDismissed.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleResetPassword = this.handleResetPassword.bind(this);
 
     }
 
@@ -42,6 +43,7 @@ class LoginForm extends Component {
                         <Input type='password' id='password' name='password' onChange={this.handlePasswordChange} />
                     </FormGroup>
                     <Button onClick={this.handleLogin}>Login</Button>
+                    <Button onClick={this.handleResetPassword}>Reset Password</Button>
                 </Form>
             </div>
         );
@@ -57,18 +59,28 @@ class LoginForm extends Component {
         this.props.onErrorDismiss();
     }
 
+    handleResetPassword() {
+        this.props.onResetPassword();
+    }
+
     handleUsernameChange(e) {
-        this.state = {
-            ...this.state,
-            username: e.target.value
-        }
+        var newUserName = e.target.value;
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                username: newUserName
+            }
+        });
     }
 
     handlePasswordChange(e) {
-        this.state = {
-            ...this.state,
-            password: e.target.value
-        }
+        var newPassword = e.target.value;
+        this.setState((prevState) => {
+            return {
+                ...prevState,
+                password: newPassword
+            }
+        });
     }
 }
 
