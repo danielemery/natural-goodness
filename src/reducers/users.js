@@ -8,12 +8,15 @@ export const LOGIN_ERROR = 'users/LOGIN_ERROR';
 export const DISMISS_LOGIN_ERROR = 'users/DISMISS_LOGIN_ERROR';
 export const START_PASSWORD_RESET = 'users/START_PASSWORD_RESET';
 export const COMPLETE_PASSWORD_RESET = 'users/COMPLETE_PASSWORD_RESET';
+export const LOGIN_NEW_PASSWORD_REQUIRED = 'users/LOGIN_NEW_PASSWORD_REQUIRED';
+export const COMPLETE_NEW_PASSWORD = 'users/COMPLETE_NEW_PASSWORD';
 
 export const LoginState = {
     LOGGED_IN: 'LOGGED_IN',
     LOGGED_OUT: 'LOGGED_OUT',
     LOGGING_IN: "LOGGING_IN",
-    RESETTING_PASSWORD: "RESETTING_PASSWORD"
+    RESETTING_PASSWORD: "RESETTING_PASSWORD",
+    NEW_PASSWORD_REQUIRED: "NEW_PASSWORD_REQUIRED"
 }
 
 const initialState = {
@@ -22,10 +25,15 @@ const initialState = {
     resetData: {
         user: null,
         message: ''
+    },
+    newPasswordData: {
+        user: null,
+        scope: null
     }
 }
 
 export default (state = initialState, action) => {
+    console.log(action);
     switch(action.type) {
         case LOGGING_IN:
             return {
@@ -37,6 +45,17 @@ export default (state = initialState, action) => {
                 ...state,
                 loginState: LoginState.LOGGED_IN
             }
+        case LOGIN_NEW_PASSWORD_REQUIRED:
+            return {
+                ...state,
+                loginState: LoginState.NEW_PASSWORD_REQUIRED,
+                newPasswordData: {
+                    ...state.newPasswordData,
+                    user: action.user
+                }
+            }
+        case COMPLETE_NEW_PASSWORD:
+            state.newPasswordData.user.completeNewPasswordChallenge(action.password, {}, )
         case LOGIN_ERROR:
             return {
                 ...state,
@@ -74,7 +93,10 @@ export const login = (credentials) => {
             type: LOGGING_IN
         });
 
-        var authenticationDetails = new AuthenticationDetails(credentials);
+        var authenticationDetails = new AuthenticationDetails({
+            Username: credentials.username,
+            Password: credentials.password
+        });
         var userPool = new CognitoUserPool(config.userPool);
 
         var user = new CognitoUser({
@@ -82,22 +104,44 @@ export const login = (credentials) => {
             Pool: userPool
         });
 
-        user.authenticateUser(authenticationDetails, {
-            onSuccess: (result) => {
-                dispatch({
-                    type: LOGGED_IN,
-                    result
-                });
-            },
-            onFailure: (err) => {
-                dispatch({
-                    type: LOGIN_ERROR,
-                    err
-                });
-            }
-        })
+        user.authenticateUser(authenticationDetails, loginEventHandler)
     }
 };
+
+const loginEventHandler = {
+    onSuccess: (result) => {
+        dispatch({
+            type: LOGGED_IN,
+            result
+        });
+    },
+    onFailure: (err) => {
+        dispatch({
+            type: LOGIN_ERROR,
+            err
+        });
+    },
+    newPasswordRequired: (userAttributes, requiredAttributes) => {
+        dispatch({
+            type: LOGIN_NEW_PASSWORD_REQUIRED,
+            userAttributes,
+            requiredAttributes,
+            user
+        });
+    },
+    mfaRequired: (codeDeliveryDetails) => {
+        console.log(codeDeliveryDetails);
+    }
+}
+
+export const completeNewPassword = (newPassword) => {
+    return dispatch => {
+        dispatch({
+            type: COMPLETE_NEW_PASSWORD,
+            password: newPassword
+        });
+    }
+}
 
 export const startPasswordReset = (username) => {
     return dispatch => {

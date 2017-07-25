@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { login, dismissLoginError, startPasswordReset } from '../reducers/users';
+import { login, dismissLoginError, startPasswordReset, completeNewPassword, LoginState } from '../reducers/users';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import ResetPasswordForm from './ResetPasswordForm';
+import NewPasswordForm from './NewPasswordForm';
 
 const LOGIN = 'LOGIN';
 const RESET = 'RESET';
@@ -20,15 +21,22 @@ class Login extends Component {
         this.handlePasswordResetRequested = this.handlePasswordResetRequested.bind(this);
         this.handlePasswordResetCodeRequested = this.handlePasswordResetCodeRequested.bind(this);
         this.handlePasswordResetCancelled = this.handlePasswordResetCancelled.bind(this);
+        this.handlePasswordConfirmed = this.handlePasswordConfirmed.bind(this);
     }
 
     render() {
-        switch(this.state.state) {
+        switch(this.props.loginState) {
+            case LoginState.LOGGED_OUT:
             default:
-            case LOGIN:
-                return <LoginForm onLogin={this.handleLogin} error={this.props.loginError} onErrorDismiss={this.props.dismissLoginError} onResetPassword={this.handlePasswordResetRequested} />
-            case RESET:
-                return <ResetPasswordForm onResetPasswordStart={this.handlePasswordResetCodeRequested} onResetPasswordCancel={this.handlePasswordResetCancelled} />
+                switch(this.state.state) {
+                    default:
+                    case LOGIN:
+                        return <LoginForm onLogin={this.handleLogin} error={this.props.loginError} onErrorDismiss={this.props.dismissLoginError} onResetPassword={this.handlePasswordResetRequested} />
+                    case RESET:
+                        return <ResetPasswordForm onResetPasswordStart={this.handlePasswordResetCodeRequested} onResetPasswordCancel={this.handlePasswordResetCancelled} />
+                }
+            case LoginState.NEW_PASSWORD_REQUIRED:
+                return <NewPasswordForm onPasswordConfirmed={this.handlePasswordConfirmed} />
         }
     }
 
@@ -46,7 +54,6 @@ class Login extends Component {
     }
 
     handlePasswordResetCancelled = () => {
-        console.log("CANCELLED");
         this.setState((prevState) => {
             return {
                 ...prevState,
@@ -58,17 +65,24 @@ class Login extends Component {
     handlePasswordResetCodeRequested = (username) => {
         this.props.startPasswordReset(username);
     }
+
+    handlePasswordConfirmed = (password) => {
+        this.props.completeNewPassword(password);
+    }
 }
 
-const mapStateToProps = state => ({
-    loginState: state.users.loginState,
-    loginError: state.users.loginError
-});
+const mapStateToProps = state => {
+    return {
+        loginState: state.users.loginState,
+        loginError: state.users.loginError
+    }
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     login,
     dismissLoginError,
-    startPasswordReset
+    startPasswordReset,
+    completeNewPassword
 }, dispatch);
 
 export default connect(
