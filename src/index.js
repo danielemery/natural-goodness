@@ -6,6 +6,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import config from './config.js';
+import {setupCognito} from 'react-cognito/src/policy.js';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -16,3 +18,6 @@ ReactDOM.render(
     document.getElementById('root'));
 
 registerServiceWorker();
+
+setupCognito(store, config.cognitoConfig);
+

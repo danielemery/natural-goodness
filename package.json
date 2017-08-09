@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.19.0",
     "bootstrap": "4.0.0-alpha.6",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",
+    "react-cognito": "^1.5.1",
     "react-dom": "^15.6.1",
     "react-fa": "^4.2.0",
     "react-redux": "^5.0.5",
