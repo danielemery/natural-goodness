@@ -2,7 +2,8 @@ const config = {
     cognitoConfig: {
         region: "",
         userPool: "",
-        clientId: ""
+        clientId: "",
+        identityPool: ""
     }
 };
 
